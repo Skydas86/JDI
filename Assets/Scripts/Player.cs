@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider;
     private bool isGrounded;
+    private bool isDeath=false;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -31,6 +32,10 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (isDeath)
+        {
+            return;
+        }
         HandleMovement();
         HandleJump();
         UpdateAnimator();
@@ -104,8 +109,7 @@ public class Player : MonoBehaviour
     }
     private void Die()
     {
-        Destroy(gameObject);
+        isDeath = true;
+        animator.SetBool("isDeath", true);
     }
-    
-
 }

@@ -2,12 +2,31 @@ using UnityEngine;
 
 public class FlyingEyeEnemy : Enemy
 {
-    [SerializeField] private float damage = 10f;
-    private void OnTriggerEnter2D(Collider2D collision)
+    [SerializeField] private GameObject fEProjectilePrefabs;
+    [SerializeField] private Transform firePoi;
+    [SerializeField] private float speedProjectile = 20f;
+    [SerializeField] private float cooldownProjectile = 2f;
+    private float nextProjectileTime = 0;
+    protected override void Update()
     {
-        if (collision.CompareTag("Player"))
+        base.Update();
+        if (Vector3.Distance(player.transform.position, transform.position) <= 5f && Time.time >= nextProjectileTime)
         {
-            player.TakeDamage(damage);
+            Shoot();
         }
     }
+    private void Shoot()
+    {
+        if (player != null)
+        {
+            nextProjectileTime = Time.time + cooldownProjectile;
+            Vector3 directionToPlayer = player.transform.position-firePoi.position;
+            directionToPlayer.Normalize();
+            GameObject projectile = Instantiate(fEProjectilePrefabs,firePoi.position,Quaternion.identity);
+            FEProjectile fEProjectile = projectile.GetComponent<FEProjectile>();
+            fEProjectile.SetMovementDirection(directionToPlayer*speedProjectile);
+        }
+    }
+
+    
 }

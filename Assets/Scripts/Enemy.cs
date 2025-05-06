@@ -7,7 +7,15 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float maxHp = 100f;
     [SerializeField] protected float currentHp;
 
+
+    protected CapsuleCollider2D capsuleCollider;
+    protected Animator animator;
     protected Player player;
+    protected void Awake()
+    {
+        animator = GetComponent<Animator>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+    }
     protected virtual void Start()
     {
         player = FindAnyObjectByType<Player>();
@@ -22,13 +30,10 @@ public abstract class Enemy : MonoBehaviour
     {
         if (player != null) 
         {
-            // Lấy vị trí hiện tại của enemy
             Vector2 currentPosition = transform.position;
 
-            // Tạo target mới: x là của player, y giữ nguyên
             Vector2 targetPosition = new Vector2(player.transform.position.x, currentPosition.y);
 
-            // Di chuyển từ vị trí hiện tại tới target theo trục x
             transform.position = Vector2.MoveTowards(currentPosition, targetPosition, enemyMoveSpeed * Time.deltaTime);
             FlipEnemy();
         }
@@ -53,7 +58,7 @@ public abstract class Enemy : MonoBehaviour
         if (currentHp <= 0)
             Die();
     }
-    private void Die()
+    protected virtual void Die()
     {
         Destroy(gameObject);
     }
