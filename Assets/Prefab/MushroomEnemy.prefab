@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8228073255874882417}
   - component: {fileID: 2915341735160927333}
   - component: {fileID: 2803837887686363131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MushroomEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 990849754451874183}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.43, y: -13.19, z: 0}
+  m_LocalPosition: {x: -12.49, y: -13.281841, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -199,10 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22849c88ebba4684ab97689cb0054ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   enemyMoveSpeed: 1
-  maxHp: 200
+  maxHp: 150
   currentHp: 0
-  damage: 10
+  damage: 20
 --- !u!70 &2803837887686363131
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

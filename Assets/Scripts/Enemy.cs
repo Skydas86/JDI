@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public abstract class Enemy : MonoBehaviour
 {
+    [SerializeField] protected GameManager gameManager;
     [SerializeField] protected float enemyMoveSpeed=1f;
     [SerializeField] protected float maxHp = 100f;
     [SerializeField] protected float currentHp;
@@ -11,6 +12,7 @@ public abstract class Enemy : MonoBehaviour
     protected CapsuleCollider2D capsuleCollider;
     protected Animator animator;
     protected Player player;
+    protected Archer archer;
     protected void Awake()
     {
         animator = GetComponent<Animator>();
@@ -18,27 +20,20 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>();
         player = FindAnyObjectByType<Player>();
+        archer = FindAnyObjectByType<Archer>();
         currentHp = maxHp;
     }
     protected virtual void Update()
     {
-        MoveToPlayer();
+        Movement();
     }
 
-    protected virtual void MoveToPlayer()
+    protected virtual void Movement()
     {
-        if (player != null) 
-        {
-            Vector2 currentPosition = transform.position;
-
-            Vector2 targetPosition = new Vector2(player.transform.position.x, currentPosition.y);
-
-            transform.position = Vector2.MoveTowards(currentPosition, targetPosition, enemyMoveSpeed * Time.deltaTime);
-            FlipEnemy();
-        }
-        return;
-        
+        transform.Translate(Vector2.left * enemyMoveSpeed * Time.deltaTime);
+        FlipEnemy();
     }
     protected void FlipEnemy()
     {
@@ -60,6 +55,7 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Die()
     {
+        gameManager.AddCoin(Random.Range(1, 6));
         Destroy(gameObject);
     }
 

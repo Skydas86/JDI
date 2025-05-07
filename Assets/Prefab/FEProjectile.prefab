@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3119354684755329726}
   - component: {fileID: 7648463089594820600}
   - component: {fileID: 2073322966528363819}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FEProjectile
   m_TagString: ProjectileEnemy
   m_Icon: {fileID: 0}
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42f2f565f6f8614ba49e731df52045b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
 --- !u!95 &2073322966528363819
 Animator:
   serializedVersion: 7

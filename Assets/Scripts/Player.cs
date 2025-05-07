@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] protected GameManager gameManager;
     [SerializeField] private float moveSpeed = 5f;         
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask groundlayer;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
         HandleJump();
         UpdateAnimator();
         SwordSlash();
+        CallArcher();
     }
     private void HandleMovement()
     {
@@ -111,5 +113,12 @@ public class Player : MonoBehaviour
     {
         isDeath = true;
         animator.SetBool("isDeath", true);
+    }
+    private void CallArcher()
+    {
+        if (Input.GetKeyDown((KeyCode.R)))
+        {
+            gameManager.CallArcher();
+        }
     }
 }
