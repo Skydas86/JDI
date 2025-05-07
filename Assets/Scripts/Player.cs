@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxHp = 100f;
     [SerializeField] private float damageSlash = 50;
     [SerializeField] private float currentHp;
+    [SerializeField] private AudioManager audioManager;
 
     public Slider slider;
     private Animator animator;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     private CapsuleCollider2D capsuleCollider;
     private bool isGrounded;
     private bool isDeath=false;
+    private bool jumpReleased = true;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -58,9 +60,22 @@ public class Player : MonoBehaviour
     }
     private void HandleJump()
     {
-        if(Input.GetButton("Jump")&&(isGrounded))
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundlayer);
+
+        if (Input.GetButton("Jump"))
+        {
+            if (isGrounded && jumpReleased)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                jumpReleased = false;
+            }
+        }
+
+        // Khi người chơi thả phím Jump → cho phép nhảy lại
+        if (Input.GetButtonUp("Jump"))
+        {
+            jumpReleased = true;
+        }
     }
     private void UpdateAnimator()
     {
@@ -75,7 +90,8 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("isAttack", true);
             Invoke(nameof(ResetAttack), 0.3f);
-        }    
+            audioManager.PlaySlashSound();
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -54,6 +54,9 @@ TagManager:
   - name: Ground
     uniqueID: 3548086003
     locked: 0
+  - name: Archer
+    uniqueID: 3146621349
+    locked: 0
   - name: Enemy
     uniqueID: 1509263319
     locked: 0
