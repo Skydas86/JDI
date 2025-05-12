@@ -49,7 +49,6 @@ public class MovementPlayer : MonoBehaviour
             }
         }
 
-        // Khi người chơi thả phím Jump → cho phép nhảy lại
         if (Input.GetButtonUp("Jump"))
         {
             jumpReleased = true;

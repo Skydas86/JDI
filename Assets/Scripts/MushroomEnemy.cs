@@ -64,7 +64,7 @@ public class MushroomEnemy : Enemy
     {
         isDeath = true;
         animator.SetBool("isDeath", true);
-        Destroy(gameObject, 1f);
+        FindFirstObjectByType<EnemyPool>().ReturnPooledEnemy(gameObject);
         gameManager.AddCoin(Random.Range(1, 11));
     }
     protected override void Movement()

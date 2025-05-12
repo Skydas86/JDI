@@ -17,7 +17,7 @@ public class Archer : MonoBehaviour
     private Animator animator;
     private Enemy detectedEnemy;
     private bool isDeath = false;
-    private bool isAttacking = false;  // Biến flag để kiểm tra trạng thái tấn công
+    private bool isAttacking = false;  
 
     private void Awake()
     {
@@ -107,14 +107,13 @@ public class Archer : MonoBehaviour
             Arrow arrow = projectile.GetComponent<Arrow>();
             arrow.SetMovementDirection(directionToEnemy * speedArrow);
 
-            Invoke(nameof(ResetAttack), cooldown);  // Đặt lại trạng thái tấn công sau khi cooldown
+            Invoke(nameof(ResetAttack), cooldown);  
         }
     }
 
-    // Phương thức để reset trạng thái tấn công
     private void ResetAttack()
     {
-        isAttacking = false;  // Archer có thể di chuyển lại sau khi tấn công xong
+        isAttacking = false; 
         animator.SetBool("isAttacking", false);
     }
 }

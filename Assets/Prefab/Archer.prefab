@@ -172,17 +172,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232004866f8d86240979089a0b24e49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 2
   detectDistance: 5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  maxHp: 40
+  maxHp: 20
   currentHp: 0
   arrowPrefabs: {fileID: 1665804837538924075, guid: 9e62217e4894c8f478dbdbc770821603, type: 3}
   firePoint: {fileID: 2626826699476937939}
-  speedArrow: 20
-  cooldown: 2
+  speedArrow: 10
+  cooldown: 3
   ray: {fileID: 1520013809884859662}
 --- !u!1 &1520013809884859662
 GameObject:

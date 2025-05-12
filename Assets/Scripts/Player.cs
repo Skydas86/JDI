@@ -4,14 +4,11 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] protected GameManager gameManager;
-    //[SerializeField] private float moveSpeed = 5f;         
-    //[SerializeField] private float jumpForce = 10f;
-    //[SerializeField] private LayerMask groundlayer;
-    //[SerializeField] private Transform groundCheck;
     [SerializeField] private float maxHp = 100f;
     [SerializeField] private float damageSlash = 50;
     [SerializeField] private float currentHp;
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private float attackCooldown = 0.5f; // thời gian hồi chiêu giữa 2 đòn
 
     public Slider slider;
     private Animator animator;
@@ -19,6 +16,7 @@ public class Player : MonoBehaviour
     private CapsuleCollider2D capsuleCollider;
     private bool isGrounded;
     private bool isDeath=false;
+    private bool canAttack = true;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -41,17 +39,30 @@ public class Player : MonoBehaviour
         
         SwordSlash();
         CallArcher();
+        PauseGame();
     }
-    
-    
+
+
     private void SwordSlash()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canAttack)
         {
+            canAttack = false;
             animator.SetBool("isAttack", true);
-            Invoke(nameof(ResetAttack), 0.3f);
+            EnableAttackCollider();
             audioManager.PlaySlashSound();
+            Invoke(nameof(ResetAttack), 0.3f); // reset animation
+            Invoke(nameof(ResetAttackCooldown), attackCooldown); // reset khả năng chém
         }
+    }
+    private void ResetAttack()
+    {
+        animator.SetBool("isAttack", false);
+        DisableAttackCollider();
+    }
+    private void ResetAttackCooldown()
+    {
+        canAttack = true;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -64,10 +75,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private void ResetAttack()
-    {
-        animator.SetBool("isAttack", false);
-    }
+    
     private void EnableAttackCollider()
     {
         capsuleCollider.enabled = true;
@@ -89,12 +97,20 @@ public class Player : MonoBehaviour
     {
         isDeath = true;
         animator.SetBool("isDeath", true);
+        gameManager.GameOverMenu();
     }
     private void CallArcher()
     {
         if (Input.GetKeyDown((KeyCode.R)))
         {
             gameManager.CallArcher();
+        }
+    }
+    private void PauseGame()
+    {
+        if (Input.GetKeyDown((KeyCode.Escape)))
+        {
+            gameManager.PauseGameMenu();
         }
     }
 }

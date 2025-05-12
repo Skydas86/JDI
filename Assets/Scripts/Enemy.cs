@@ -55,8 +55,9 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Die()
     {
+        FindFirstObjectByType<EnemyPool>().ReturnPooledEnemy(gameObject);
         gameManager.AddCoin(Random.Range(1, 6));
-        Destroy(gameObject);
+        
     }
 
     
